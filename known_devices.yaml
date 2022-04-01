@@ -1,0 +1,28 @@
+
+life360_gustavo_lazzari:
+  name: life360_gustavo_lazzari
+  mac:
+  icon:
+  picture:
+  track: true
+
+life360_orestes_lazzari:
+  name: life360_orestes_lazzari
+  mac:
+  icon:
+  picture:
+  track: true
+
+life360_rachel_lazzari:
+  name: life360_rachel_lazzari
+  mac:
+  icon:
+  picture: !secret rachel_picture
+  track: true
+
+life360_mariana_lazzari:
+  name: life360_mariana_lazzari
+  mac:
+  icon:
+  picture: !secret mariana_picture
+  track: true

@@ -1,0 +1,13 @@
+alias: "Watching Plex on the TV at night time"
+trigger:
+  - platform: template
+    value_template: "{{ is_state('media_player.plex_plex_web_firefox','playing') }}"
+action:
+  - service: scene.turn_on
+    entity_id: scene.movie_mode
+  - service: homeassistant.turn_off
+    entity_id: automation.watching_plex_on_the_tv_at_night_time
+condition:
+  condition: state
+  entity_id: sun.sun
+  state: "below_horizon"

@@ -1,0 +1,344 @@
+- id: '1630454930844'
+  name: Equipmentos
+  entities:
+    switch.monitor_2:
+      friendly_name: Monitor
+      icon: mdi:monitor
+      state: 'off'
+    switch.tv_2:
+      friendly_name: TV
+      icon: mdi:monitor
+      state: 'off'
+    switch.pc:
+      friendly_name: PC
+      icon: mdi:laptop
+      state: 'off'
+    light.lamp:
+      supported_color_modes:
+      - onoff
+      friendly_name: Lamp
+      supported_features: 8
+      state: 'off'
+    light.leds_secondary:
+      restored: true
+      supported_color_modes:
+      - onoff
+      supported_features: 8
+      friendly_name: LEDS Secondary
+      state: unavailable
+    light.leds_tv:
+      supported_color_modes:
+      - onoff
+      friendly_name: Leds TV
+      supported_features: 8
+      state: 'off'
+    light.leds_desk:
+      supported_color_modes:
+      - onoff
+      friendly_name: Leds Desk
+      supported_features: 8
+      state: 'off'
+    light.leds_bookshelf:
+      supported_color_modes:
+      - onoff
+      friendly_name: Leds Bookshelf
+      supported_features: 8
+      state: 'off'
+    switch.leds_secondary:
+      friendly_name: LEDS_SECONDARY
+      icon: ''
+      state: 'on'
+- id: '1634338853401'
+  name: Movie Mode ON
+  entities:
+    light.fita_de_led:
+      effect_list:
+      - blue_fade
+      - blue_strobe
+      - colorjump
+      - colorloop
+      - colorstrobe
+      - cyan_fade
+      - cyan_strobe
+      - gb_cross_fade
+      - green_fade
+      - green_strobe
+      - purple_fade
+      - purple_strobe
+      - rb_cross_fade
+      - red_fade
+      - red_strobe
+      - rg_cross_fade
+      - white_fade
+      - white_strobe
+      - yellow_fade
+      - yellow_strobe
+      - random
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 38
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      friendly_name: Fita de led
+      supported_features: 21
+      state: 'on'
+    switch.monitor_2:
+      friendly_name: Monitor
+      icon: mdi:monitor
+      state: 'off'
+    switch.tv_2:
+      friendly_name: TV
+      icon: mdi:monitor
+      state: 'on'
+    switch.pc:
+      friendly_name: PC
+      icon: mdi:laptop
+      state: 'off'
+    light.lamp:
+      supported_color_modes:
+      - onoff
+      friendly_name: Lamp
+      supported_features: 8
+      state: 'off'
+    light.leds_secondary:
+      restored: true
+      supported_color_modes:
+      - onoff
+      supported_features: 8
+      friendly_name: LEDS Secondary
+      state: unavailable
+    light.leds_tv:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds TV
+      supported_features: 8
+      state: 'on'
+    light.leds_desk:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds Desk
+      supported_features: 8
+      state: 'on'
+    switch.leds_secondary:
+      friendly_name: LEDS_SECONDARY
+      icon: ''
+      state: 'on'
+    light.ceiling_light_2:
+      supported_color_modes:
+      - onoff
+      friendly_name: Ceiling Light
+      supported_features: 8
+      state: 'off'
+  icon: mdi:movie
+- id: '1634338952601'
+  name: Movie Mode OFF
+  entities:
+    switch.monitor_2:
+      friendly_name: Monitor
+      icon: mdi:monitor
+      state: 'on'
+    switch.tv_2:
+      friendly_name: TV
+      icon: mdi:monitor
+      state: 'on'
+    switch.pc:
+      friendly_name: PC
+      icon: mdi:laptop
+      state: 'off'
+    light.lamp:
+      supported_color_modes:
+      - onoff
+      friendly_name: Lamp
+      supported_features: 8
+      state: 'off'
+    light.leds_secondary:
+      restored: true
+      supported_color_modes:
+      - onoff
+      supported_features: 8
+      friendly_name: LEDS Secondary
+      state: unavailable
+    light.leds_tv:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds TV
+      supported_features: 8
+      state: 'on'
+    light.leds_desk:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds Desk
+      supported_features: 8
+      state: 'on'
+    switch.leds_secondary:
+      friendly_name: LEDS_SECONDARY
+      icon: ''
+      state: 'on'
+    light.ceiling_light_2:
+      supported_color_modes:
+      - onoff
+      friendly_name: Ceiling Light
+      supported_features: 8
+      state: 'off'
+    light.fita_de_led:
+      effect_list:
+      - blue_fade
+      - blue_strobe
+      - colorjump
+      - colorloop
+      - colorstrobe
+      - cyan_fade
+      - cyan_strobe
+      - gb_cross_fade
+      - green_fade
+      - green_strobe
+      - purple_fade
+      - purple_strobe
+      - rb_cross_fade
+      - red_fade
+      - red_strobe
+      - rg_cross_fade
+      - white_fade
+      - white_strobe
+      - yellow_fade
+      - yellow_strobe
+      - random
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      friendly_name: Fita de led
+      supported_features: 21
+      state: 'on'
+  icon: mdi:movie
+- id: '1647906536400'
+  name: Lights OFF
+  entities:
+    switch.monitor_2:
+      icon: mdi:monitor
+      friendly_name: Monitor
+      state: 'on'
+    switch.tv_2:
+      icon: mdi:monitor
+      friendly_name: TV
+      state: 'off'
+    switch.pc:
+      icon: mdi:desktop-tower
+      friendly_name: PC
+      state: 'off'
+    light.lamp:
+      supported_color_modes:
+      - onoff
+      icon: mdi:desk-lamp
+      friendly_name: Lamp
+      supported_features: 8
+      state: 'off'
+    light.leds_secondary:
+      restored: true
+      supported_color_modes:
+      - onoff
+      friendly_name: LEDS Secondary
+      supported_features: 8
+      state: unavailable
+    light.leds_tv:
+      supported_color_modes:
+      - onoff
+      friendly_name: Leds TV
+      supported_features: 8
+      state: 'off'
+    light.leds_desk:
+      supported_color_modes:
+      - onoff
+      friendly_name: Leds Bookshelf
+      supported_features: 8
+      state: 'off'
+    switch.leds_secondary:
+      icon: mdi:power-plug
+      friendly_name: LEDS_SECONDARY
+      state: 'on'
+    light.ceiling_light_2:
+      supported_color_modes:
+      - onoff
+      icon: mdi:ceiling-light
+      friendly_name: Ceiling Light
+      supported_features: 8
+      state: 'off'
+  icon: mdi:lightbulb-off
+- id: '1647906583742'
+  name: Lights ON
+  entities:
+    switch.monitor_2:
+      icon: mdi:monitor
+      friendly_name: Monitor
+      state: 'on'
+    switch.tv_2:
+      icon: mdi:monitor
+      friendly_name: TV
+      state: 'on'
+    switch.pc:
+      icon: mdi:desktop-tower
+      friendly_name: PC
+      state: 'off'
+    light.lamp:
+      supported_color_modes:
+      - onoff
+      icon: mdi:desk-lamp
+      friendly_name: Lamp
+      supported_features: 8
+      state: 'off'
+    light.leds_secondary:
+      restored: true
+      supported_color_modes:
+      - onoff
+      friendly_name: LEDS Secondary
+      supported_features: 8
+      state: unavailable
+    light.leds_tv:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds TV
+      supported_features: 8
+      state: 'on'
+    light.leds_desk:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      friendly_name: Leds Bookshelf
+      supported_features: 8
+      state: 'on'
+    switch.leds_secondary:
+      icon: mdi:power-plug
+      friendly_name: LEDS_SECONDARY
+      state: 'on'
+    light.ceiling_light_2:
+      supported_color_modes:
+      - onoff
+      icon: mdi:ceiling-light
+      friendly_name: Ceiling Light
+      supported_features: 8
+      state: 'off'
+  icon: mdi:lightbulb-on

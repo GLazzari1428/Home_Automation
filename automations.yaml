@@ -1,0 +1,619 @@
+- alias: Computer Switch
+  trigger:
+    platform: state
+    entity_id: switch.computer_switch
+    to: 'on'
+  condition: []
+  action:
+  - delay: 0.9
+  - service: switch.turn_off
+    entity_id: switch.computer_switch
+  id: 8ceb93debcbf4365a70554f70144d54c
+- alias: Watching Plex on firefox at night time
+  trigger:
+  - platform: template
+    value_template: '{{ is_state(''media_player.plex_plex_web_firefox'',''playing'')
+      }}'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.movie_mode
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  id: 339638c3df60436bbebabefd68569b68
+- alias: Paused Plex on firefox at night time
+  trigger:
+  - platform: template
+    value_template: '{{ is_state(''media_player.plex_plex_web_firefox'',''paused'')
+      }}'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.movie_mode_off
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  id: f78113ad904e43cfa01f70ecd2ae1828
+- alias: Sunset Ledstrip Dimm
+  trigger:
+  - platform: sun
+    event: sunset
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.fita_de_led
+    data:
+      brightness_pct: 70
+  id: ae73747c104a4421a236f167e80643fd
+- id: '1640738428184'
+  alias: Gate Notification Gustavo AT HOME
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: zone
+    entity_id: device_tracker.life360_gustavo_lazzari
+    zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_gustavo_s_iphone
+    data:
+      title: Portão Aberto
+      message: O portão ficou aberto!
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640740077581'
+  alias: Notification Test AT HOME
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+  condition:
+  - condition: zone
+    entity_id: device_tracker.life360_gustavo_lazzari
+    zone: zone.home
+  action:
+  - service: notify.mobile_app_gustavo_s_iphone
+    data:
+      title: Portão Aberto
+      message: O portão ficou aberto!
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1640740762017'
+  alias: Notification Test AT HOME (Duplicate)
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.life360_gustavo_lazzari
+      zone: zone.home
+  action:
+  - service: notify.mobile_app_gustavo_s_iphone
+    data:
+      title: Portão Aberto
+      message: O portão ficou aberto!
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+  mode: single
+- id: '1640752815529'
+  alias: GitHub Backup
+  description: ''
+  trigger:
+  - platform: time
+    at: '12:00:00'
+  condition: []
+  action:
+  - service: hassio.addon_stdin
+    data:
+      addon: core_ssh
+      input: /config/ha_gitpush.sh
+  mode: single
+- id: '1640800697600'
+  alias: Gate Notification Rachel AT HOME
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: zone
+    entity_id: device_tracker.life360_rachel_lazzari
+    zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_iphone_de_rachel
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640800886393'
+  alias: Gate Notification Orestes AWAY
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.life360_orestes_lazzari
+      zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      state: 'off'
+      entity_id: input_boolean.gate_override
+  action:
+  - service: notify.mobile_app_iphone_de_orestes
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640800923033'
+  alias: Gate Notification Mariana AT HOME
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: zone
+    entity_id: device_tracker.life360_mariana_lazzari
+    zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_iphone_de_mariana
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640800997350'
+  alias: Gate Notification Gustavo AWAY
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.life360_gustavo_lazzari
+      zone: zone.home
+    - condition: or
+      conditions:
+      - condition: zone
+        entity_id: device_tracker.life360_gustavo_lazzari
+        zone: zone.puc_pr
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_gustavo_s_iphone
+    data:
+      title: Portão Aberto
+      message: O portão ficou aberto!
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640801038676'
+  alias: Gate Notification Mariana AWAY
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.life360_mariana_lazzari
+      zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_iphone_de_mariana
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640801160687'
+  alias: Gate Notification Orestes AT HOME
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: zone
+    entity_id: device_tracker.life360_orestes_lazzari
+    zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_iphone_de_orestes
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1640801243894'
+  alias: Gate Notification Rachel AWAY
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a2ec88cce6ac8fc879553c45c929eaf9
+    entity_id: binary_sensor.gate
+    domain: binary_sensor
+    id: Gate_is_on
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 40
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.life360_rachel_lazzari
+      zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.gate_override
+      state: 'off'
+  action:
+  - service: notify.mobile_app_iphone_de_rachel
+    data:
+      data:
+        entity_id: camera.cam1
+        push:
+          category: camera
+      title: Portão Aberto
+      message: O portão ficou aberto!
+  - service: switch.turn_on
+    target:
+      entity_id: switch.1000d937bb
+  - wait_for_trigger:
+    - type: turned_off
+      platform: device
+      device_id: a2ec88cce6ac8fc879553c45c929eaf9
+      entity_id: binary_sensor.gate
+      domain: binary_sensor
+    continue_on_timeout: true
+  - service: switch.turn_off
+    target:
+      entity_id: switch.1000d937bb
+  mode: single
+- id: '1644706274610'
+  alias: Microvac Battery LOW
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.microvac_battery_remaining
+    below: '25'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.monitor_2
+  mode: single
+- id: '1644706303965'
+  alias: Microvac Battery HIGH
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.microvac_battery_remaining
+    above: '85'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.monitor_2
+  mode: single
+- id: '1646161646075'
+  alias: Turn notebook charging at 5AM
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00:00
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.monitor_2
+  mode: single
+- id: '1647813801246'
+  alias: Tag Lamp is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: fbbd1398-853a-4d51-95d0-bca6fad2ec39
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.lamp
+  mode: single
+- id: '1647814312220'
+  alias: Tag Night Light is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: ef6be944-3700-4d9c-8b16-ac0c9aac386c
+  condition: []
+  action:
+  - service: light.toggle
+    data:
+      brightness_pct: 30
+      color_name: red
+    target:
+      device_id: 26f6b0e047006d1caf84cde648399782
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.leds_desk
+  mode: single
+- id: '1647905925296'
+  alias: Tag Home/Away is scanned (INPUT ON -- DESLIGAR LUZES)
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 739f4ee2-d609-4f7d-976e-a4804312f912
+  condition:
+  - condition: state
+    entity_id: input_boolean.home
+    state: 'on'
+  action:
+  - scene: scene.lights_off
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.home
+  mode: single
+- id: '1647906146351'
+  alias: Tag Home/Away is scanned (INPUT OFF -- LIGAR LUZES)
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 739f4ee2-d609-4f7d-976e-a4804312f912
+  condition:
+  - condition: state
+    entity_id: input_boolean.home
+    state: 'off'
+  action:
+  - scene: scene.lights_on
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.home
+  mode: single

@@ -1,0 +1,104 @@
+mqtt:
+  host: 192.168.0.57
+  user: homeassistant
+  password: ahthohg5muav4uiqu0goo4Thubiith5ok0iliechooc4aeShaiGeesh0mieS1oox
+
+cameras:
+  cam1:
+    ffmpeg:
+      inputs:
+        - path: !secret cam1
+          roles:
+            - detect
+            - clips
+    detect:
+      width: 1080
+      height: 960
+      fps: 5
+    objects:
+      track:
+        - person
+        # - car
+        # - truck
+    snapshots:
+      enabled: True
+      timestamp: True
+      bounding_box: True
+      retain:
+        default: 10
+    record:
+      enabled: true
+      retain_days: 2
+      events:
+        retain:
+          default: 10
+  cam2:
+    ffmpeg:
+      inputs:
+        - path: !secret cam2
+          roles:
+            - detect
+            - clips
+    detect:
+      width: 1280
+      height: 720
+      fps: 5
+    objects:
+      track:
+        - person
+        - car
+        - motorcycle
+    snapshots:
+      enabled: True
+      timestamp: True
+      bounding_box: True
+      retain:
+        default: 10
+    record:
+      enabled: true
+      retain_days: 2
+      events:
+        retain:
+          default: 10
+  cam3:
+    ffmpeg:
+      inputs:
+        - path: !secret cam3
+          roles:
+            - detect
+            - clips
+    detect:
+      width: 1280
+      height: 720
+      fps: 5
+    objects:
+      track:
+        - person
+        - car
+        - motorcycle
+    snapshots:
+      enabled: True
+      timestamp: True
+      bounding_box: True
+      retain:
+        default: 10
+    record:
+      enabled: true
+      retain_days: 2
+      events:
+        retain:
+          default: 10
+detectors:
+  cpu1:
+    type: cpu
+  cpu2:
+    type: cpu
+
+birdseye:
+  enabled: True
+  quality: 8
+  # Optional: Mode of the view. Available options are: objects, motion, and continuous
+  #   objects - cameras are included if they have had a tracked object within the last 30 seconds
+  #   motion - cameras are included if motion was detected in the last 30 seconds
+  #   continuous - all cameras are included always
+  mode: continuous

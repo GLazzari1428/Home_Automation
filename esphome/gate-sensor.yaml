@@ -1,0 +1,84 @@
+esphome:
+  name: gate-sensor
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "f03c438c51ad1f2398967d7241c9b112"
+
+wifi:
+  networks:
+  - ssid: "OLJR"
+    bssid: "98:DE:D0:AD:3A:B4"
+    password: "ajb2727ahr41941428"
+      
+  - ssid: "OLJR_VIVO_SECUNDARIA"
+    password: "ajb2727ahr41941428"
+      
+  - ssid: "OLJR"
+    bssid: "90:9A:4A:3C:A7:A2"
+    password: "ajb2727ahr41941428"  
+
+  manual_ip:
+    static_ip: 192.168.0.18
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0 
+    
+    
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Gate-Sensor Fallback Hotspot"
+    password: "thor1428"
+    ap_timeout:
+      seconds: 30 
+  
+captive_portal:
+
+
+binary_sensor:
+  - platform: gpio
+    name: "Gate"
+    pin:
+      number: 12
+      inverted: false
+      mode: INPUT_PULLUP
+      
+text_sensor:
+  - platform: template
+    name: Gate ESP32 Uptime
+    id: uptime_human
+    icon: mdi:clock-start
+    
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 3s
+    
+  - platform: uptime
+    name: Uptime Sensor
+    id: uptime_sensor
+    update_interval: 3s
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: uptime_human
+            state: !lambda |-
+              int seconds = round(id(uptime_sensor).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              seconds = seconds % 60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (minutes ? to_string(minutes) + "m " : "") +
+                (to_string(seconds) + "s")
+              ).c_str();

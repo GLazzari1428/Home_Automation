@@ -1,0 +1,108 @@
+my_computer_shutdown:
+  alias: My Computer - Shutdown
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/shutdown
+      payload: ''
+my_computer_suspend:
+  alias: My Computer - Suspend
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/suspend
+      payload: ''
+my_computer_hibernate:
+  alias: My Computer - Hibernate
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/hibernate
+      payload: ''
+my_computer_reboot:
+  alias: My Computer - Reboot
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/reboot
+      payload: ''
+my_computer_lock:
+  alias: Lock Computer
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/BATAVO-PC/commands/lock
+      payload: ''
+  mode: single
+my_computer_logoff:
+  alias: My Computer - Logoff
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/logoff
+      payload: ''
+my_computer_vol_mute:
+  alias: My Computer - Toggle Mute
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/volume/mute
+      payload: ''
+my_computer_vol_max:
+  alias: My Computer - Vol Max
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/volume/set
+      payload: '100'
+my_computer_displays_on:
+  alias: My Computer - Displays ON
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/displays/on
+      payload: ''
+my_computer_displays_off:
+  alias: My Computer - Displays OFF
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/displays/off
+      payload: ''
+my_computer_refresh:
+  alias: My Computer - Refresh
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/refresh
+      payload: ''
+my_computer_notify:
+  alias: My Computer - Notify
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/BATAVO-PC/commands/notify
+      payload: '{ "title": "My Notification Title", "message": "This is an example
+        of notification using IOT Link", "launchParams": "toast://open/https://iotlink.gitlab.io"
+        }'
+  mode: single
+my_computer_run_chrome:
+  alias: My Computer - Run Firefox
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/run
+      payload: '{ "command": "C:\\Program Files\\Mozilla Firefox\\firefox.exe", "args":
+        "http://anton.local:32400", "path": "C:\\Program Files\\Mozilla Firefox",
+        "user": "", "visible": true, "fallback": true }'
+  mode: single
+notify_rachel:
+  alias: Notify PC Rachel Is Home
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: iotlink/workgroup/batavo-pc/commands/notify
+      payload: '{ "title": "Alguém chegou!", "message": "A rachel chegou em casa!",
+        "iconUrl": "file:///C:/Users/gusta/OneDrive/Pictures/Home%20Assistant/life360/rachel.jpg",
+        "launchParams": "toast://open/https://iotlink.gitlab.io" }'
+  mode: single

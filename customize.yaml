@@ -1,0 +1,10 @@
+binary_sensor.1000e0ea50_lock:
+  friendly_name: Gate
+device_tracker.life360_gustavo_lazzari:
+  friendly_name: Gustavo
+device_tracker.life360_mariana_lazzari:
+  friendly_name: Mariana
+device_tracker.life360_rachel_lazzari:
+  friendly_name: Rachel
+device_tracker.life360_orestes_lazzari:
+  friendly_name: Orestes

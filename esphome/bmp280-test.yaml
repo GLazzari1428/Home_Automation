@@ -1,0 +1,31 @@
+esphome:
+  name: bmp280-test
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "70ec6fcb870fde8a7e5287e5d375537a"
+
+wifi:
+  ssid: "OLJR_VIVO_SECUNDARIA"
+  password: "ajb2727ahr41941428"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Bmp280-Test Fallback Hotspot"
+    password: "Dgbgq52L09jp"
+
+captive_portal:
+
+sensor:
+  - platform: adc
+    pin: 33
+    name: LM35DZ
+    update_interval: 2s
+    attenuation: auto

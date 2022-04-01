@@ -1,0 +1,109 @@
+esphome:
+  name: esp32-bedroom
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "bbc29d21d4b34057d4e76f6eebcc3e73"
+
+wifi:
+  ssid: "OLJR_VIVO_SECUNDARIA"
+  password: "ajb2727ahr41941428"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-Bedroom Fallback Hotspot"
+    password: "4MRf84kohTGD"
+
+captive_portal:
+
+esp32_ble_tracker:
+
+output:
+  - platform: gpio
+    id: "Lamp"
+    pin: 32
+    inverted: True
+  - platform: gpio    
+    id: "LEDS_TV"
+    pin: 33
+  - platform: gpio  
+    id: "LEDS_DESK"
+    pin: 26 
+  - platform: gpio   
+    id: "CEILING_LIGHT"
+    pin: 4
+    
+light:
+  - platform: binary
+    output: "Lamp"
+    name: "Lamp"
+    restore_mode: RESTORE_DEFAULT_ON
+
+  - platform: binary
+    output: "LEDS_TV"
+    name: "LEDS TV"
+    restore_mode: RESTORE_DEFAULT_ON
+
+  - platform: binary
+    output: "LEDS_DESK"
+    name: "LEDS Desk"
+    restore_mode: RESTORE_DEFAULT_ON
+    
+  - platform: binary
+    output: "CEILING_LIGHT"
+    name: "Ceiling Light"
+    restore_mode: RESTORE_DEFAULT_OFF
+    
+switch:
+  - platform: gpio
+    name: "Monitor"
+    pin: 14
+    restore_mode: RESTORE_DEFAULT_ON
+
+  - platform: gpio
+    name: "TV"
+    pin: 12
+    restore_mode: RESTORE_DEFAULT_ON
+
+  - platform: gpio
+    name: "PC"
+    pin: 27
+    inverted: True
+    restore_mode: RESTORE_DEFAULT_OFF
+    
+  - platform: gpio
+    name: "LEDS_SECONDARY"
+    pin: 25
+    restore_mode: RESTORE_DEFAULT_ON
+  
+binary_sensor:
+  - platform: gpio
+    pin: 15
+    name: "Switch 1"
+  - platform: gpio
+    pin: 2
+    name: "Switch 2"
+  - platform: gpio
+    pin: 13
+    name: "Switch 3"
+  - platform: ble_presence
+    mac_address: E2:2A:11:2D:7A:5A
+    name: "BLE Xiaomi Mi Band 4"
+
+sensor:
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:A7:85:B6
+    bindkey: "b3fb0d2272a4cd0971512c979407ddcb"
+    temperature:
+      name: "Room Temperature"
+    humidity:
+      name: "Room Humidity"
+    battery_level:
+      name: "Room Temp Battery Level"

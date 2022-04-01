@@ -1,0 +1,299 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# image_processing:
+#   - platform: doods
+#     scan_interval: 10800
+#     url: "http://192.168.0.57:8080"
+#     detector: default
+#     source:
+#       - entity_id: camera.cam1
+#     file_out:
+#       - "/media/{{ camera_entity.split('.')[1] }}_latest.jpg"
+#       - "/media/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+#     confidence: 50
+#     labels:
+#       - name: person
+#         confidence: 40
+#       - car
+#       - truck
+
+api:
+#alexa:
+#  smart_home:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+homeassistant:
+  customize: !include customize.yaml
+
+influxdb:
+  host: 192.168.0.26
+  port: 8086
+  database: home_assisant
+  username: homeassistant
+  password: thor1428
+  max_retries: 3
+  default_measurement: state
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# light:
+#   - platform: flux_led
+#     scan_interval: 0.5
+#     devices:
+#       192.168.0.79:
+#         name: Fita de led
+#         mode: "rgb"
+
+input_boolean:
+  computer:
+
+panel_iframe:
+  mdiindex:
+    title: MDI Icon Index
+    icon: mdi:vector-square
+    url: https://cdn.rawgit.com/james-fry/home-assistant-mdi/efd95d7a/home-assistant-mdi.html
+
+frontend:
+  extra_module_url:
+    - /hacsfiles/hass-bha-icons/hass-bha-icons.js
+    - /local/zoom-enable.js
+  themes: !include_dir_merge_named themes
+
+camera:
+  - platform: ffmpeg
+    input: !secret cam1
+    name: cam1
+  - platform: ffmpeg
+    input: !secret cam2
+    name: cam2
+  - platform: ffmpeg
+    input: !secret cam3
+    name: cam3
+  - platform: ffmpeg
+    input: !secret cam4
+    name: cam4
+  - platform: ffmpeg
+    input: !secret cam5
+    name: cam5
+  - platform: ffmpeg
+    input: !secret cam6
+    name: cam6
+  - platform: ffmpeg
+    input: !secret cam7
+    name: cam7
+
+spotify:
+  client_id: !secret client_id
+  client_secret: !secret client_secret
+  
+# DOODS
+
+binary_sensor:
+  - platform: mqtt
+    name: "My Computer - Connected"
+    state_topic: "iotlink/workgroup/my-computer/lwt"
+    value_template: "{{ value }}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: "connectivity"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Charging"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/power/status"
+    value_template: "{{ value }}"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: "plug"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Battery Status"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/battery/status"
+    value_template: "{{ value }}"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: "plug"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+sensor:
+
+  - platform: mqtt
+    name: "My Computer - Current User"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/system/current-user"
+    unit_of_measurement: ''
+    icon: mdi:account
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Idle Time"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/system/idle-time"
+    unit_of_measurement: 'seconds'
+    icon: mdi:timer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - CPU Usage"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/cpu/usage"
+    unit_of_measurement: '%'
+    icon: mdi:speedometer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - RAM Usage"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/memory/usage"
+    unit_of_measurement: '%'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - RAM Available"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/memory/available"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - RAM Used"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/memory/used"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - RAM Total"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/memory/total"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Remaining Battery"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/battery/remaining-percent"
+    unit_of_measurement: '%'
+    device_class: battery
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Remaining Battery Time"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/battery/remaining-time"
+    unit_of_measurement: 'minutes'
+    icon: mdi:timer
+    value_template: "{{ ( value | float / 60 ) | int }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Predicted Lifetime"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/battery/full-lifetime"
+    unit_of_measurement: 'minutes'
+    icon: mdi:timer
+    value_template: "{{ ( value | float / 60 ) | int }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+    
+
+  - platform: mqtt
+    name: "My Computer - Network IPv4"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/network/0/ipv4"
+    unit_of_measurement: ''
+    icon: mdi:lan
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+
+  - platform: mqtt
+    name: "My Computer - Network Speed"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/network/0/speed"
+    unit_of_measurement: 'Mbps'
+    icon: mdi:speedometer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "My Computer - Network Wired"
+    state_topic: "iotlink/workgroup/my-computer/windows-monitor/stats/network/0/wired"
+    unit_of_measurement: ''
+    icon: mdi:ethernet
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/my-computer/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

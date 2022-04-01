@@ -1,0 +1,41 @@
+esphome:
+  name: rgb-led
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "00882f22d930260eff56ac57226e0061"
+
+wifi:
+  ssid: "OLJR_VIVO_SECUNDARIA"
+  password: "ajb2727ahr41941428"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Rgb-Led Fallback Hotspot"
+    password: "RDzQPaxRiomN"
+
+captive_portal:
+light:
+  - platform: rgb
+    name: "RGB LED"
+    red: output_red
+    green: output_green
+    blue: output_blue
+
+output:
+  - platform: ledc
+    id: output_red
+    pin: 23
+  - platform: ledc
+    id: output_green
+    pin: 22
+  - platform: ledc
+    id: output_blue
+    pin: 21
