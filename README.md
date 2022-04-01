@@ -2,4 +2,4 @@
 The start of a full home automation project based on homeassistant.
 
 
-![alt text](https://i.imgur.com/a/aWjfCZN.jpg)
+<!-- ![alt text](https://i.imgur.com/a/aWjfCZN.jpg) -->
